@@ -3,6 +3,7 @@
 > If you are using mongodb locally with prisma, you may get an error: Prisma needs to perform transactions, which requires your MongoDB server to be run as a replica set. https://pris.ly/d/mongodb-replica-set   
 
 #### READ [MORE](https://pris.ly/d/mongodb-replica-set)
+#### MORE [SOURCE](https://github.com/prisma/prisma/discussions/18958)
 
 ### here's all you need to do
 
