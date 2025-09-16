@@ -17,6 +17,10 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "style": {
+        "noNonNullAssertion": "off",
+        "useImportType": "off"
+      },
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
@@ -30,7 +34,7 @@
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": "off"
       }
     }
   }
