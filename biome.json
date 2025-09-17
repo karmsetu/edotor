@@ -21,6 +21,9 @@
         "noStaticElementInteractions": "off",
         "useKeyWithClickEvents": "off"
       },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
       "style": {
         "noNonNullAssertion": "off",
         "useImportType": "off"

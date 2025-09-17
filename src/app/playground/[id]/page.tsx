@@ -8,6 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import PlayGroundEditor from "@/module/playground/components/PlayGroundEditor";
 import { TemplateFileTree } from "@/module/playground/components/playGroundExplorer";
 import { useFileExplorer } from "@/module/playground/hooks/useFileExplorer";
 import { usePlayground } from "@/module/playground/hooks/usePlayground";
@@ -99,7 +105,7 @@ export default function PlaygroundPage() {
                     onClick={() => {}}
                     disabled={!activeFile || !activeFile.hasUnsavedChanges}
                   >
-                    <Save className="h-4 w-4" />
+                    {/* <Save className="h-4 w-4" /> */}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Save (Ctrl+S)</TooltipContent>
@@ -194,6 +200,34 @@ export default function PlaygroundPage() {
                     )}
                   </div>
                 </Tabs>
+              </div>
+              <div className="flex-1">
+                <ResizablePanelGroup direction="horizontal" className="h-full">
+                  <ResizablePanel defaultSize={isPreviewVisible ? 50 : 100}>
+                    <PlayGroundEditor
+                      activeFile={activeFile}
+                      content={activeFile?.content || ""}
+                      onContentChange={() => {}}
+                    />
+                  </ResizablePanel>
+
+                  {isPreviewVisible && (
+                    <>
+                      <ResizableHandle />
+                      <ResizablePanel defaultSize={50}>
+                        {/* <WebContainerPreview
+                          templateData={templateData}
+                          instance={instance}
+                          writeFileSync={writeFileSync}
+                          isLoading={containerLoading}
+                          error={containerError}
+                          serverUrl={serverUrl!}
+                          forceResetup={false}
+                        /> */}
+                      </ResizablePanel>
+                    </>
+                  )}
+                </ResizablePanelGroup>
               </div>
             </div>
           ) : (
