@@ -27,6 +27,8 @@ import { TemplateFileTree } from "@/module/playground/components/playGroundExplo
 import { useFileExplorer } from "@/module/playground/hooks/useFileExplorer";
 import { usePlayground } from "@/module/playground/hooks/usePlayground";
 import { TemplateFile } from "@/module/playground/lib/pathToJson";
+import WebContainerPreview from "@/module/webcontainers/components/WebContainerPreview";
+import { useWebContainer } from "@/module/webcontainers/hooks/useWebContainer";
 import { FileText, Save, Settings, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -48,6 +50,15 @@ export default function PlaygroundPage() {
     setPlaygroundId,
     setActiveFileId,
   } = useFileExplorer();
+
+  const {
+    serverUrl,
+    isLoading: containerLoading,
+    error: containerError,
+    instance,
+    writeFileSync,
+    // @ts-ignore
+  } = useWebContainer({ templateData });
 
   useEffect(() => {
     setPlaygroundId(id);
@@ -105,7 +116,7 @@ export default function PlaygroundPage() {
                     onClick={() => {}}
                     disabled={!activeFile || !activeFile.hasUnsavedChanges}
                   >
-                    {/* <Save className="h-4 w-4" /> */}
+                    <Save className="h-4 w-4" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Save (Ctrl+S)</TooltipContent>
@@ -215,15 +226,15 @@ export default function PlaygroundPage() {
                     <>
                       <ResizableHandle />
                       <ResizablePanel defaultSize={50}>
-                        {/* <WebContainerPreview
-                          templateData={templateData}
+                        <WebContainerPreview
+                          templateData={templateData!}
                           instance={instance}
                           writeFileSync={writeFileSync}
                           isLoading={containerLoading}
                           error={containerError}
                           serverUrl={serverUrl!}
                           forceResetup={false}
-                        /> */}
+                        />
                       </ResizablePanel>
                     </>
                   )}
