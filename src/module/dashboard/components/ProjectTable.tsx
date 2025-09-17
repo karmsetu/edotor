@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import type { Project } from "../types";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -59,11 +59,10 @@ interface ProjectTableProps {
   projects: Project[];
   onUpdateProject?: (
     id: string,
-    data: { title: string; description: string }
+    data: { title: string; description: string },
   ) => Promise<void>;
   onDeleteProject?: (id: string) => Promise<void>;
   onDuplicateProject?: (id: string) => Promise<unknown>;
-  
 }
 
 interface EditProjectData {
@@ -76,7 +75,6 @@ export default function ProjectTable({
   onUpdateProject,
   onDeleteProject,
   onDuplicateProject,
-
 }: ProjectTableProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -86,7 +84,6 @@ export default function ProjectTable({
     description: "",
   });
   const [isLoading, setIsLoading] = useState(false);
- 
 
   const handleEditClick = (project: Project) => {
     setSelectedProject(project);
@@ -118,10 +115,6 @@ export default function ProjectTable({
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleMarkasFavorite = async (project: Project) => {
-    //    TODO Write your logic here
   };
 
   const handleDeleteProject = async () => {
@@ -228,7 +221,10 @@ export default function ProjectTable({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48">
                       <DropdownMenuItem asChild>
-                        <MarkedToggleButton markedForRevision={project.Starmark[0]?.isMarked} id={project.id} />
+                        <MarkedToggleButton
+                          markedForRevision={project.Starmark[0]?.isMarked}
+                          id={project.id}
+                        />
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link

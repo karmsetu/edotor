@@ -135,6 +135,8 @@ const templates: TemplateOption[] = [
   },
 ];
 
+type Category = "all" | "frontend" | "backend" | "fullstack";
+
 const TemplateSelectionModal = ({
   isOpen,
   onClose,
@@ -143,9 +145,7 @@ const TemplateSelectionModal = ({
   const [step, setStep] = useState<"select" | "configure">("select");
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [category, setCategory] = useState<
-    "all" | "frontend" | "backend" | "fullstack"
-  >("all");
+  const [category, setCategory] = useState<Category>("all");
   const [projectName, setProjectName] = useState("");
 
   const filteredTemplates = templates.filter((template) => {
@@ -153,7 +153,7 @@ const TemplateSelectionModal = ({
       template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       template.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       template.tags.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase())
+        tag.toLowerCase().includes(searchQuery.toLowerCase()),
       );
 
     const matchesCategory =
@@ -188,10 +188,10 @@ const TemplateSelectionModal = ({
 
       const template = templates.find((t) => t.id === selectedTemplate);
       onSubmit({
-        title:projectName || `New ${template?.name} Project`,
-        template:templateMap[selectedTemplate] || "REACT",
-        description:template?.description
-      })
+        title: projectName || `New ${template?.name} Project`,
+        template: templateMap[selectedTemplate] || "REACT",
+        description: template?.description,
+      });
       onClose();
       // Reset state for next time
       setStep("select");
@@ -209,7 +209,7 @@ const TemplateSelectionModal = ({
       .fill(0)
       .map((_, i) => (
         <Star
-          key={i}
+          key={i + count}
           size={14}
           className={
             i < count ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
@@ -262,7 +262,7 @@ const TemplateSelectionModal = ({
                 <Tabs
                   defaultValue="all"
                   className="w-full sm:w-auto"
-                  onValueChange={(value) => setCategory(value as any)}
+                  onValueChange={(value) => setCategory(value as Category)}
                 >
                   <TabsList className="grid grid-cols-4 w-full sm:w-[400px]">
                     <TabsTrigger value="all">All</TabsTrigger>
@@ -280,6 +280,8 @@ const TemplateSelectionModal = ({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {filteredTemplates.length > 0 ? (
                     filteredTemplates.map((template) => (
+                      // biome-ignore lint/a11y/noStaticElementInteractions: <static>
+                      // biome-ignore lint/a11y/useKeyWithClickEvents: <suppress>
                       <div
                         key={template.id}
                         className={`relative flex p-6 border rounded-lg cursor-pointer transition-all duration-300 hover:scale-[1.02]
