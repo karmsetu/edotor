@@ -47,8 +47,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export default function PlaygroundPage() {
-  const [isPreviewVisible, setIsPreviewVisible] = useState(true);
   const { id } = useParams<{ id: string }>();
+  const [isPreviewVisible, setIsPreviewVisible] = useState(true);
+
   const { playgroundData, templateData, isLoading, error, saveTemplateData } =
     usePlayground(id);
 
@@ -218,7 +219,6 @@ export default function PlaygroundPage() {
         }
 
         const newTemplateData = await saveTemplateData(updatedTemplateData);
-        //@ts-ignore
         setTemplateData(newTemplateData || updatedTemplateData);
         // Update open files
         const updatedOpenFiles = openFiles.map((f) =>
@@ -297,8 +297,8 @@ export default function PlaygroundPage() {
     );
   }
 
+  // Loading state
   if (isLoading) {
-    // Loading state
     return (
       <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] p-4">
         <div className="w-full max-w-md p-6 rounded-lg shadow-sm border">
@@ -323,8 +323,8 @@ export default function PlaygroundPage() {
     );
   }
 
+  // No template data
   if (!templateData) {
-    // No template data
     return (
       <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] p-4">
         <FolderOpen className="h-12 w-12 text-amber-500 mb-4" />
@@ -405,12 +405,9 @@ export default function PlaygroundPage() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem
-                    onClick={() =>
-                      setIsPreviewVisible((prevState) => !prevState)
-                    }
+                    onClick={() => setIsPreviewVisible(!isPreviewVisible)}
                   >
-                    {isPreviewVisible ? "Hide" : "Show"}
-                    Preview
+                    {isPreviewVisible ? "Hide" : "Show"} Preview
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={closeAllFiles}>
@@ -490,7 +487,7 @@ export default function PlaygroundPage() {
                       <ResizableHandle />
                       <ResizablePanel defaultSize={50}>
                         <WebContainerPreview
-                          templateData={templateData!}
+                          templateData={templateData}
                           instance={instance}
                           writeFileSync={writeFileSync}
                           isLoading={containerLoading}

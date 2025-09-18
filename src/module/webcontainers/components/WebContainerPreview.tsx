@@ -6,7 +6,6 @@ import { CheckCircle, Loader2, XCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 import { WebContainer } from "@webcontainer/api";
-// import TerminalComponent from "./terminal";
 import { TemplateFolder } from "@/module/playground/lib/pathToJson";
 import TerminalComponent from "./Terminal";
 
@@ -353,12 +352,12 @@ const WebContainerPreview = ({
           </div>
 
           <div className="h-64 border-t">
-            {/* <TerminalComponent
+            <TerminalComponent
               ref={terminalRef}
               webContainerInstance={instance}
               theme="dark"
               className="h-full"
-            /> */}
+            />
           </div>
         </div>
       )}
