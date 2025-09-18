@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { WebContainer } from "@webcontainer/api";
 // import TerminalComponent from "./terminal";
 import { TemplateFolder } from "@/module/playground/lib/pathToJson";
+import TerminalComponent from "./Terminal";
 
 interface WebContainerPreviewProps {
   templateData: TemplateFolder;
@@ -333,12 +334,12 @@ const WebContainerPreview = ({
 
           {/* Terminal */}
           <div className="flex-1 p-4">
-            {/* <TerminalComponent
+            <TerminalComponent
               ref={terminalRef}
               webContainerInstance={instance}
               theme="dark"
               className="h-full"
-            /> */}
+            />
           </div>
         </div>
       ) : (
