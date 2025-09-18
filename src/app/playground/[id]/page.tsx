@@ -25,6 +25,7 @@ import {
 import LoadingStep from "@/module/playground/components/LoadingStep";
 import PlayGroundEditor from "@/module/playground/components/PlayGroundEditor";
 import { TemplateFileTree } from "@/module/playground/components/playGroundExplorer";
+import ToggleAI from "@/module/playground/components/ToggleAi";
 import { useFileExplorer } from "@/module/playground/hooks/useFileExplorer";
 import { usePlayground } from "@/module/playground/hooks/usePlayground";
 import { findFilePath } from "@/module/playground/lib";
@@ -396,6 +397,12 @@ export default function PlaygroundPage() {
                 </TooltipTrigger>
                 <TooltipContent>Save All (Ctrl+Shift+S)</TooltipContent>
               </Tooltip>
+
+              <ToggleAI
+                isEnabled={true}
+                onToggle={() => {}}
+                suggestionLoading={false}
+              />
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
