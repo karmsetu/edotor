@@ -15,6 +15,8 @@ declare namespace NodeJS {
     AUTH_GITHUB_SECRET?: string;
     AUTH_GOOGLE_ID?: string;
     AUTH_GOOGLE_SECRET?: string;
+    AI_URL?: string;
+    AI_MODEL?: string;
     // Add your other variables here
   }
 }
