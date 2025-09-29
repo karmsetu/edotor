@@ -1,6 +1,6 @@
 # Edotor
 
-<video src="./assets/videos/Edotor-sample-video.mp4" controls width="100%"></video>
+[![Demo Video](https://i9.ytimg.com/vi/tZJ6GRuzic0/mqdefault.jpg?sqp=CJyU6MYG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGC0gZShWMA8%3D&rs=AOn4CLDNVRdAhlxZOORuZBCfa0n8eCY2-A&retry=4)](https://www.youtube.com/watch?v=tZJ6GRuzic0)
 
 a web based rich text editor with AI features 
 
