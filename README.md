@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Edotor
 
-## Getting Started
+<video src="./assets/videos/Edotor-sample-video.mp4" controls width="100%"></video>
 
-First, run the development server:
+a web based rich text editor with AI features 
+
+## Tech Stack
+- [Next.js](https://nextjs.org/) – react framework  
+- [TypeScript](https://www.typescriptlang.org/) 
+- [Tailwind CSS](https://tailwindcss.com/) -css  
+- [shadcn/ui](https://ui.shadcn.com/) 
+- [Prisma](https://www.prisma.io/) – ORM  
+- [MongoDB](https://www.mongodb.com/) - DB  
+- [Docker](https://www.docker.com/)  
+- [Zod](https://zod.dev/) –  validation and parsing  
+- [Zustand](https://github.com/pmndrs/zustand) – state management for React  
+- [React](https://react.dev/)  
+- [Monaco Editor](https://microsoft.github.io/monaco-editor/) –  browser-based code editor (used in VS Code)  
+- [WebContainer](https://webcontainers.io/) – Run Node.js environments directly in the browser  
+- [Xterm.js](https://xtermjs.org/) – Front-end terminal component for web apps  
+- [Biome](https://biomejs.dev/) – new linter (ESLint tool a lot of time in my machine)
+- [Ollama](https://ollama.com/) – run LLM locally
+  - Model: `qwen3:0.6b` (from [Qwen](https://qwenlm.github.io/))  - only good model my machine can run.
+- [Auth.js (NextAuth)](https://authjs.dev/) – Self Auth 
+
+## How to Setup
+
+### Prerequisite
+1. bun/node
+2. Docker / MongoDB Atlas Collection
+3. github and Google Cloud Account (OAuth purpuses)
+4. MongoDB Compass
+5. Ollama 
+
+### Steps
+1. clone this repo
+2. `cd edotor`
+3. install packages
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun add
+``` 
+
+```bash
+npm i
+``` 
+
+4. pick database
+- if you are self hosting mongo then make sure it's replica set is active
+- refer to this [link](./devnotes/mongo-replica-set.md)
+
+5. make an `.env` file
+
+```.env
+DATABASE_URL = mongodb://localhost:27017/edotor?replicaSet=rs0 # MongoDB Atlas Collection URL
+AUTH_SECRET = # Added by `npx auth`. Read more: https://cli.authjs.dev
+
+AUTH_GITHUB_ID = 
+AUTH_GITHUB_SECRET = 
+
+AUTH_GOOGLE_ID = 
+AUTH_GOOGLE_SECRET = 
+
+AI_URL = http://localhost:11434/api/generate
+AI_MODEL = qwen3:0.6b # or any model your device can handle
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> **Note**: The `AUTH_SECRET` and OAuth credentials (`AUTH_GITHUB_ID`, etc.) are managed via the Auth.js CLI. Run `npx auth secret` and `npx auth add github` / `npx auth add google` as needed.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+6. clone starter templates, refer [here](./devnotes/starter-templates-setup.MD)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+7. connect database to mongoDB compass
+    - if you are using the docker file then first run 
+    ```bash
+        docker compose up -d
+    ```
 
-## Learn More
+8. generate models and migrate them to MongoDB  
+```bash
+bun db:generate
+bun db:push
+```
 
-To learn more about Next.js, take a look at the following resources:
+9. now run the app
+```bash
+bun run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Building  
+since it is in beta version and  has lots of types and linting conflicts, i won't recommend building it yet (until v1.2.0 is released)
 
-## Deploy on Vercel
+but if you wish to, you need to make some changes in `next.config.ts` file
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```ts
+eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+```
+like this
+```ts
+import type { NextConfig } from "next";
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+const nextConfig: NextConfig = {
+  /* config options here */
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  ...
+};
+
+export default nextConfig;
+
+```
+
+- then run 
+```bash
+bun run build
+bun run start
+```
+
+> **Note:** if you are having any problem with builds then delete the `.next` folder and build again, most of the time they are caching issues
